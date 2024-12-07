@@ -1,1 +1,86 @@
+import os
 
+class ToDoList:
+    def __init__(self):
+        self.tasks = []
+
+    def display_tasks(self):
+        if not self.tasks:
+            print("\nYour To-Do List is empty.\n")
+        else:
+            print("\nYour To-Do List:")
+            for i, task in enumerate(self.tasks, start=1):
+                print(f"{i}. {task}")
+
+    def add_task(self, task):
+        self.tasks.append(task)
+        print(f"\nTask '{task}' added successfully!\n")
+
+    def update_task(self, task_number, new_task):
+        if 0 < task_number <= len(self.tasks):
+            old_task = self.tasks[task_number - 1]
+            self.tasks[task_number - 1] = new_task
+            print(f"\nTask '{old_task}' updated to '{new_task}' successfully!\n")
+        else:
+            print("\nInvalid task number.\n")
+
+    def delete_task(self, task_number):
+        if 0 < task_number <= len(self.tasks):
+            removed_task = self.tasks.pop(task_number - 1)
+            print(f"\nTask '{removed_task}' deleted successfully!\n")
+        else:
+            print("\nInvalid task number.\n")
+
+    def clear_tasks(self):
+        self.tasks.clear()
+        print("\nAll tasks cleared!\n")
+
+
+def main():
+    todo_list = ToDoList()
+
+    while True:
+        print("\n--- To-Do List Menu ---")
+        print("1. View Tasks")
+        print("2. Add Task")
+        print("3. Update Task")
+        print("4. Delete Task")
+        print("5. Clear All Tasks")
+        print("6. Exit")
+
+        try:
+            choice = int(input("Enter your choice: "))
+        except ValueError:
+            print("\nPlease enter a valid number.\n")
+            continue
+
+        if choice == 1:
+            todo_list.display_tasks()
+        elif choice == 2:
+            task = input("\nEnter the task: ")
+            todo_list.add_task(task)
+        elif choice == 3:
+            todo_list.display_tasks()
+            try:
+                task_number = int(input("\nEnter the task number to update: "))
+                new_task = input("Enter the new task: ")
+                todo_list.update_task(task_number, new_task)
+            except ValueError:
+                print("\nInvalid input. Please enter a valid task number.\n")
+        elif choice == 4:
+            todo_list.display_tasks()
+            try:
+                task_number = int(input("\nEnter the task number to delete: "))
+                todo_list.delete_task(task_number)
+            except ValueError:
+                print("\nInvalid input. Please enter a valid task number.\n")
+        elif choice == 5:
+            todo_list.clear_tasks()
+        elif choice == 6:
+            print("\nExiting To-Do List Application. Goodbye!\n")
+            break
+        else:
+            print("\nInvalid choice. Please choose a valid option.\n")
+
+if __name__ == "__main__":
+    main()
